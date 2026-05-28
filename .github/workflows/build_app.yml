@@ -5,7 +5,7 @@ on:
 
 defaults:
   run:
-    shell: bash
+    shell: pwsh
 
 jobs:
   build:
@@ -15,38 +15,55 @@ jobs:
       # Move to your actual Megacity folder
       - name: Go to Megacity project
         run: |
-          cd C:\Users\ibuser\Documents\UnityProject\megacity-metro
+          Set-Location "C:\Users\ibuser\Documents\UnityProject\megacity-metro"
           git fetch origin
           # git reset --hard origin/main
 
       # Clean previous build
       - name: Clean build folder
         run: |
-          cd C:\Users\ibuser\Documents\UnityProject\megacity-metro
-          rm -rf build || true
+          Set-Location "C:\Users\ibuser\Documents\UnityProject\megacity-metro"
+          $projectPath = "C:\Users\ibuser\Documents\UnityProject\megacity-metro"
+          $buildPath = Join-Path $projectPath "build"  
+          if (Test-Path $buildPath) {
+              Remove-Item $buildPath -Recurse -Force
+          }
 
-      # Run Unity build
+      # Build
       - name: Run Unity Build
         run: |
-          cd C:\Users\ibuser\Documents\UnityProject\megacity-metro
+          $projectPath = "C:\Users\ibuser\Documents\UnityProject\megacity-metro"
+          $unityPath = "C:\Program Files\Unity\Hub\Editor\2022.3.34f1\Editor\Unity.exe"
 
-          "/mnt/c/Program Files/Unity/Hub/Editor/2022.3.34f1/Editor/Unity.exe" \
-            -batchmode -nographics -quit \
-            -projectPath . \
-            -buildTarget Win64 \
-            -job-worker-count 24 \
-            -executeMethod BuildApp.Build \
+          Set-Location $projectPath
+
+          & "$unityPath" `
+            -batchmode -nographics -quit `
+            -projectPath . `
+            -buildTarget Win64 `
+            -job-worker-count 24 `
+            -executeMethod BuildApp.Build `
             -logFile build.log
 
       # Show log (very useful)
       - name: Show log
         if: always()
         run: |
-          cd C:\Users\ibuser\Documents\UnityProject\megacity-metro
-          cat build.log || true
+          $logPath = "C:\Users\ibuser\Documents\UnityProject\megacity-metro\build.log"
+
+          if (Test-Path $logPath) {
+              Get-Content $logPath
+          } else {
+              Write-Output "No log file found"
+          }
 
       # Verify output
       - name: Show build result
         run: |
-          cd C:\Users\ibuser\Documents\UnityProject\megacity-metro
-          ls -la build || true
+          $buildPath = "C:\Users\ibuser\Documents\UnityProject\megacity-metro\build"
+
+          if (Test-Path $buildPath) {
+              Get-ChildItem -Recurse $buildPath
+          } else {
+              Write-Output "Build folder not found"
+          }
