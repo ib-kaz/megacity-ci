@@ -1,0 +1,20 @@
+name: Test Runner
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: [self-hosted, Windows]
+
+    steps:
+      - name: Print machine info
+        run: |
+          echo "Runner is working ✅"
+          hostname
+          uname -a || ver
+
+      - name: Check disk
+        run: |
+          echo "Disk space:"
+          df -h || dir
