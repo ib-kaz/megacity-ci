@@ -34,9 +34,9 @@ jobs:
         run: |
           $projectPath = "C:\Users\ibuser\Documents\UnityProject\megacity-metro"
           $unityPath = "C:\Program Files\Unity\Hub\Editor\2022.3.34f1\Editor\Unity.exe"
-      
+
           Set-Location $projectPath
-      
+
           $process = Start-Process `
             -FilePath $unityPath `
             -ArgumentList @(
@@ -52,9 +52,9 @@ jobs:
             -NoNewWindow `
             -Wait `
             -PassThru
-      
+
           Write-Output "Unity exited with code $($process.ExitCode)"
-      
+
           if ($process.ExitCode -ne 0) {
             throw "Unity build failed"
           }
