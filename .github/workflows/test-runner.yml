@@ -9,12 +9,13 @@ jobs:
 
     steps:
       - name: Print machine info
+        shell: powershell
         run: |
-          echo "Runner is working ✅"
+          Write-Host "Runner is working ✅"
           hostname
-          uname -a || ver
+          systeminfo | Select-String "OS Name"
 
       - name: Check disk
+        shell: powershell
         run: |
-          echo "Disk space:"
-          df -h || dir
+          Get-PSDrive -PSProvider FileSystem
