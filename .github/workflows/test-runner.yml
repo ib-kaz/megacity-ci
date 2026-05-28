@@ -11,7 +11,7 @@ jobs:
       - name: Print machine info
         shell: powershell
         run: |
-          Write-Host "Runner is working ✅"
+          Write-Host "Runner is working"
           hostname
           systeminfo
 
