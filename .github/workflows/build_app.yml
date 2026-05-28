@@ -15,20 +15,20 @@ jobs:
       # Move to your actual Megacity folder
       - name: Go to Megacity project
         run: |
-          cd /mnt/c/Users/ibuser/Documents/UnityProject/megacity-metro  
+          cd C:\Users\ibuser\Documents\UnityProject\megacity-metro
           git fetch origin
           # git reset --hard origin/main
 
       # Clean previous build
       - name: Clean build folder
         run: |
-          cd /mnt/c/Users/ibuser/Documents/UnityProject/megacity-metro
+          cd C:\Users\ibuser\Documents\UnityProject\megacity-metro
           rm -rf build || true
 
       # Run Unity build
       - name: Run Unity Build
         run: |
-          cd /mnt/c/Users/ibuser/Documents/UnityProject/megacity-metro
+          cd C:\Users\ibuser\Documents\UnityProject\megacity-metro
 
           "/mnt/c/Program Files/Unity/Hub/Editor/2022.3.34f1/Editor/Unity.exe" \
             -batchmode -nographics -quit \
@@ -42,11 +42,11 @@ jobs:
       - name: Show log
         if: always()
         run: |
-          cd /mnt/c/Users/ibuser/Documents/UnityProject/megacity-metro
+          cd C:\Users\ibuser\Documents\UnityProject\megacity-metro
           cat build.log || true
 
       # Verify output
       - name: Show build result
         run: |
-          cd /mnt/c/Users/ibuser/Documents/UnityProject/megacity-metro
+          cd C:\Users\ibuser\Documents\UnityProject\megacity-metro
           ls -la build || true
