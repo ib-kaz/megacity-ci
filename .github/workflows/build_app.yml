@@ -30,20 +30,35 @@ jobs:
           }
 
       # Build
-      - name: Run Unity Build
-        run: |
-          $projectPath = "C:\Users\ibuser\Documents\UnityProject\megacity-metro"
-          $unityPath = "C:\Program Files\Unity\Hub\Editor\2022.3.34f1\Editor\Unity.exe"
 
-          Set-Location $projectPath
+- name: Run Unity Build
+  run: |
+    $projectPath = "C:\Users\ibuser\Documents\UnityProject\megacity-metro"
+    $unityPath = "C:\Program Files\Unity\Hub\Editor\2022.3.34f1\Editor\Unity.exe"
 
-          & "$unityPath" `
-            -batchmode -nographics -quit `
-            -projectPath . `
-            -buildTarget Win64 `
-            -job-worker-count 24 `
-            -executeMethod BuildApp.Build `
-            -logFile -
+    Set-Location $projectPath
+
+    $process = Start-Process `
+      -FilePath $unityPath `
+      -ArgumentList @(
+        "-batchmode",
+        "-nographics",
+        "-quit",
+        "-projectPath .",
+        "-buildTarget Win64",
+        "-job-worker-count 24",
+        "-executeMethod BuildApp.Build",
+        "-logFile build.log"
+      ) `
+      -NoNewWindow `
+      -Wait `
+      -PassThru
+
+    Write-Output "Unity exited with code $($process.ExitCode)"
+
+    if ($process.ExitCode -ne 0) {
+      throw "Unity build failed"
+    }
 
       # Show log (very useful)
       - name: Show log
