@@ -13,7 +13,7 @@ jobs:
         run: |
           Write-Host "Runner is working ✅"
           hostname
-          systeminfo | Select-String "OS Name"
+          systeminfo
 
       - name: Check disk
         shell: powershell
