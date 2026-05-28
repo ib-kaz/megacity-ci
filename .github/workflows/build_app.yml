@@ -77,7 +77,8 @@ jobs:
           $buildPath = "C:\Users\ibuser\Documents\UnityProject\megacity-metro\build"
 
           if (Test-Path $buildPath) {
-              Get-ChildItem -Recurse $buildPath
+              Get-ChildItem $buildPath
           } else {
               Write-Output "Build folder not found"
+              exit 1
           }
