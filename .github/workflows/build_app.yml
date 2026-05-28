@@ -12,40 +12,41 @@ jobs:
     runs-on: [self-hosted, Windows]
 
     steps:
-      # ✅ Move to your actual Megacity folder
+      # Move to your actual Megacity folder
       - name: Go to Megacity project
         run: |
-          cd C:\Users\ibuser\Documents\UnityProject\megacity-metro  # 🔴 CHANGE THIS to your actual path
+          cd /mnt/c/Users/ibuser/Documents/UnityProject/megacity-metro  
           git fetch origin
           # git reset --hard origin/main
 
-      # ✅ Clean previous build
+      # Clean previous build
       - name: Clean build folder
         run: |
-          cd C:\Users\ibuser\Documents\UnityProject\megacity-metro
-          rm -rf Builds/App || true
+          cd /mnt/c/Users/ibuser/Documents/UnityProject/megacity-metro
+          rm -rf build || true
 
-      # ✅ Run Unity build
+      # Run Unity build
       - name: Run Unity Build
         run: |
-          cd C:\Users\ibuser\Documents\UnityProject\megacity-metro
+          cd /mnt/c/Users/ibuser/Documents/UnityProject/megacity-metro
 
-          "C:\Program Files\Unity\Hub\Editor\2020.3.34f1\Editor\Unity.exe" \
-          -batchmode -nographics -quit \
-          -projectPath . \
-          -buildTarget StandaloneWindows64 \
-          -executeMethod BuildApp.Build \
-          -logFile build.log
+          "/mnt/c/Program Files/Unity/Hub/Editor/2022.3.34f1/Editor/Unity.exe" \
+            -batchmode -nographics -quit \
+            -projectPath . \
+            -buildTarget Win64 \
+            -job-worker-count 24 \
+            -executeMethod BuildApp.Build \
+            -logFile build.log
 
-      # ✅ Show log (very useful)
+      # Show log (very useful)
       - name: Show log
         if: always()
         run: |
-          cd C:\Users\ibuser\Documents\UnityProject\megacity-metro
+          cd /mnt/c/Users/ibuser/Documents/UnityProject/megacity-metro
           cat build.log || true
 
-      # ✅ Verify output
+      # Verify output
       - name: Show build result
         run: |
-          cd C:\Users\ibuser\Documents\UnityProject\megacity-metro
-          ls -la Builds/App/ || true
+          cd /mnt/c/Users/ibuser/Documents/UnityProject/megacity-metro
+          ls -la build || true
