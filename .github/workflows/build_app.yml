@@ -43,7 +43,7 @@ jobs:
             -buildTarget Win64 `
             -job-worker-count 24 `
             -executeMethod BuildApp.Build `
-            -logFile build.log
+            -logFile -
 
       # Show log (very useful)
       - name: Show log
