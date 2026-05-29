@@ -1,4 +1,4 @@
-name: Build App windows
+name: Build Unity App
 
 on:
   workflow_dispatch:
@@ -13,7 +13,7 @@ jobs:
 
     steps:
       # Move to your actual Megacity folder
-      - name: Go to Megacity project
+      - name: Go to megacity project
         run: |
           Set-Location "C:\Users\ibuser\Documents\UnityProject\megacity-metro"
           git fetch origin
@@ -30,7 +30,7 @@ jobs:
           }
 
       # Build
-      - name: Run Unity Build
+      - name: Run unity build
         run: |
           $projectPath = "C:\Users\ibuser\Documents\UnityProject\megacity-metro"
           $unityPath = "C:\Program Files\Unity\Hub\Editor\2022.3.34f1\Editor\Unity.exe"
@@ -77,7 +77,7 @@ jobs:
           $buildPath = "C:\Users\ibuser\Documents\UnityProject\megacity-metro\build"
 
           if (Test-Path $buildPath) {
-              Get-ChildItem -Recurse $buildPath
+              Get-ChildItem $buildPath
           } else {
               Write-Output "Build folder not found"
           }

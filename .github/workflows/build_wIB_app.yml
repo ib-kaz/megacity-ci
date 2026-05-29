@@ -1,4 +1,4 @@
-name: Build w/ IB App windows
+name: Build App with Incredibuild
 
 on:
   workflow_dispatch:
@@ -30,7 +30,7 @@ jobs:
           }
 
       # Build
-      - name: Run Unity Build
+      - name: Run unity build with incredibuild
         run: |
           $projectPath = "C:\Users\ibuser\Documents\UnityProject\megacity-metro"
           $unityPath = "C:\Program Files\Unity\Hub\Editor\2022.3.34f1\Editor\Unity.exe"
@@ -45,6 +45,7 @@ jobs:
             -ArgumentList @(
             "/command=`"$unityCommand`"",
             "/profile=`"$projectPath\unity_profile.xml`"",
+            "/log=build_wib_app.log",
             "/openmonitor"
             ) `
             -NoNewWindow `
