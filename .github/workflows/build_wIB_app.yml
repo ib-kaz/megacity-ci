@@ -34,24 +34,23 @@ jobs:
         run: |
           $projectPath = "C:\Users\ibuser\Documents\UnityProject\megacity-metro"
           $unityPath = "C:\Program Files\Unity\Hub\Editor\2022.3.34f1\Editor\Unity.exe"
+          $unityPathEscaped = "C:\Program^ Files\Unity\Hub\Editor\2022.3.34f1\Editor\Unity.exe"
+          $ibConsole = "C:\Program Files (x86)\IncrediBuild\ibConsole.exe"
 
           Set-Location $projectPath
-
+          $unityCommand = "$unityPathEscaped -quit -projectpath `"$projectPath`" -buildTarget Win64 -job-worker-count 24 -batchmode -logFile build.log -nographics"
+                  
           $process = Start-Process `
-            -FilePath $unityPath `
+            -FilePath $ibConsole `
             -ArgumentList @(
-              "-batchmode",
-              "-nographics",
-              "-quit",
-              "-projectPath .",
-              "-buildTarget Win64",
-              "-job-worker-count 24",
-              "-executeMethod BuildApp.Build",
-              "-logFile build.log"
+            "/command=`"$unityCommand`"",
+            "/profile=`"$projectPath\unity_profile.xml`"",
+            "/openmonitor"
             ) `
             -NoNewWindow `
             -Wait `
             -PassThru
+
 
           Write-Output "Unity exited with code $($process.ExitCode)"
 
@@ -77,7 +76,8 @@ jobs:
           $buildPath = "C:\Users\ibuser\Documents\UnityProject\megacity-metro\build"
 
           if (Test-Path $buildPath) {
-              Get-ChildItem -Recurse $buildPath
+              Get-ChildItem $buildPath
           } else {
               Write-Output "Build folder not found"
+              exit 1
           }
