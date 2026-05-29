@@ -45,8 +45,8 @@ jobs:
             -ArgumentList @(
             "/command=`"$unityCommand`"",
             "/profile=`"$projectPath\unity_profile.xml`"",
-            "/log=build_wib_app.log",
-            "/openmonitor"
+            "/openmonitor",
+            "/log"
             ) `
             -NoNewWindow `
             -Wait `
