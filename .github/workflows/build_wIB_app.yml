@@ -38,7 +38,7 @@ jobs:
           $ibConsole = "C:\Program Files (x86)\IncrediBuild\ibConsole.exe"
 
           Set-Location $projectPath
-          $unityCommand = "$unityPathEscaped -quit -projectpath `"$projectPath`" -buildTarget Win64 -job-worker-count 24 -batchmode -logFile build.log -nographics"
+          $unityCommand = "$unityPathEscaped -quit -projectpath `"$projectPath`" -buildTarget Win64 -job-worker-count 24 -batchmode -logFile - -nographics"
                   
           $process = Start-Process `
             -FilePath $ibConsole `
